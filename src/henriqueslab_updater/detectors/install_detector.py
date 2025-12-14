@@ -67,8 +67,10 @@ class InstallDetector:
             Detected installation method
         """
         # 1. Check for Homebrew
+        # Check for Homebrew by looking for key path components
+        # (resolve() might prepend /System/Volumes/Data on macOS)
         for prefix in self.HOMEBREW_PREFIXES:
-            if executable_str.startswith(prefix):
+            if prefix in executable_str:
                 if "/Cellar/" in executable_str or "/opt/" in executable_str:
                     return "homebrew"
 
