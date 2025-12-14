@@ -21,7 +21,7 @@ class PyPISource(VersionSource):
         self,
         package_name: str,
         pypi_url: Optional[str] = None,
-        timeout: int = 10,
+        timeout: int = 5,
         use_httpx: bool = True,
     ):
         """Initialize PyPI source.
@@ -29,7 +29,7 @@ class PyPISource(VersionSource):
         Args:
             package_name: Package name on PyPI
             pypi_url: Custom PyPI API URL (default: https://pypi.org/pypi/{package}/json)
-            timeout: Request timeout in seconds (default: 10)
+            timeout: Request timeout in seconds (default: 5)
             use_httpx: Whether to use httpx if available (default: True)
         """
         self.package_name = package_name

@@ -48,6 +48,7 @@ def is_newer_version(current: str, latest: str) -> bool:
     """Check if latest version is newer than current version.
 
     Uses packaging.version if available, falls back to custom comparison.
+    Dev versions are NOT considered newer than release versions.
 
     Args:
         current: Current version string
@@ -56,9 +57,28 @@ def is_newer_version(current: str, latest: str) -> bool:
     Returns:
         True if latest is newer than current, False otherwise
     """
+    # Handle unknown versions
+    if current == "unknown" or latest == "unknown":
+        return False
+
+    # Don't consider dev/pre-release versions as "newer"
+    if any(x in latest.lower() for x in ['.dev', '-dev', '-rc', '-alpha', '-beta', '+g']):
+        return False
+
     if PACKAGING_AVAILABLE:
         try:
-            return parse(latest) > parse(current)
+            from packaging.version import InvalidVersion
+
+            try:
+                current_parsed = parse(current)
+                latest_parsed = parse(latest)
+                # Only consider it newer if latest is not a pre-release
+                if latest_parsed.is_prerelease or latest_parsed.is_devrelease:
+                    return False
+                return latest_parsed > current_parsed
+            except InvalidVersion:
+                # Fall through to manual comparison
+                pass
         except Exception:
             pass  # Fall through to manual comparison
 

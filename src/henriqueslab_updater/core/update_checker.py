@@ -146,14 +146,31 @@ class UpdateChecker:
     def _perform_check(self) -> Optional[Dict[str, Any]]:
         """Perform the actual update check.
 
+        Implements Homebrew-first strategy: if installed via Homebrew,
+        check Homebrew source first before falling back to other sources.
+
         Returns:
             Update info dict if update available, None otherwise
         """
+        # Get installation info for smart source prioritization
+        install_info = self.install_detector.detect()
+
+        # Smart source ordering: if Homebrew install, prioritize Homebrew source
+        sources = self.sources[:]
+        if install_info.method == "homebrew":
+            # Move Homebrew sources to front
+            homebrew_sources = [s for s in sources if s.name == "homebrew"]
+            other_sources = [s for s in sources if s.name != "homebrew"]
+            sources = homebrew_sources + other_sources
+        else:
+            # Standard priority order
+            sources = sorted(sources, key=lambda s: s.get_priority())
+
         # Try each source in priority order
         latest_version = None
         source_name = None
 
-        for source in self.sources:
+        for source in sources:
             try:
                 version = source.fetch_latest_version()
                 if version:

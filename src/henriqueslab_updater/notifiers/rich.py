@@ -111,11 +111,14 @@ class RichNotifier(Notifier):
         try:
             panel = Panel(
                 message,
-                title=f"📦 {self.title}",
+                title=f"[bold magenta]📦 {self.title}[/bold magenta]",
+                title_align="left",
                 border_style=self.color_scheme,
+                padding=(1, 2),
                 expand=False,
             )
+            self.console.print()
             self.console.print(panel)
         except Exception:
-            # Fallback to plain print
+            # Fallback to plain print for encoding issues
             print(message, flush=True)
