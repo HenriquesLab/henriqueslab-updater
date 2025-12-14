@@ -51,3 +51,10 @@ dmypy.json
 # OS
 .DS_Store
 Thumbs.db
+
+# Documentation - ignore internal dev docs, keep public-facing ones
+*.md
+!README.md
+!CHANGELOG.md
+!CONTRIBUTING.md
+!CODE_OF_CONDUCT.md
