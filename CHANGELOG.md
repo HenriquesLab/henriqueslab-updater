@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.2] - 2025-12-15
+
+### Changed
+
+- **CI/CD**: Migrated PyPI publishing from API tokens to OIDC (OpenID Connect) trusted publishing
+  - More secure: Short-lived tokens instead of long-lived API tokens
+  - No secret management: GitHub Actions authenticates directly with PyPI
+  - Uses official `pypa/gh-action-pypi-publish` action
+
 ## [1.1.1] - 2025-12-15
 
 ### Added
