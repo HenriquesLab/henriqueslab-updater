@@ -136,7 +136,7 @@ class UpdateChecker:
             Update info dict if update available, None otherwise
         """
         if not force and not self.should_check():
-            cached = self.cache_manager.get_cached_update_info()
+            cached = self.cache_manager.get_cached_update_info(current_version=self.current_version)
             if cached and cached.get("update_available"):
                 return cached
             return None
@@ -275,7 +275,7 @@ class UpdateChecker:
             update_info = self._cached_update_info
         else:
             # Try to load from cache
-            cached = self.cache_manager.get_cached_update_info()
+            cached = self.cache_manager.get_cached_update_info(current_version=self.current_version)
             if cached and cached.get("update_available"):
                 update_info = cached
             else:

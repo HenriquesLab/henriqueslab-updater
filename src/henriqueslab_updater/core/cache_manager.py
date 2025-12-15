@@ -92,14 +92,26 @@ class CacheManager:
             # Invalid timestamp, should check
             return True
 
-    def get_cached_update_info(self) -> Optional[Dict[str, Any]]:
+    def get_cached_update_info(self, current_version: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """Get cached update information if available and valid.
 
+        Args:
+            current_version: Current package version to validate cache against
+
         Returns:
-            Cached update info if available, None otherwise
+            Cached update info if available and valid, None otherwise
         """
         if not self.should_check():
-            return self.load()
+            cached_data = self.load()
+
+            # Invalidate cache if current version has changed
+            if cached_data and current_version:
+                cached_current = cached_data.get("current_version")
+                if cached_current and cached_current != current_version:
+                    # Version changed, cache is stale
+                    return None
+
+            return cached_data
         return None
 
     def clear(self) -> None:

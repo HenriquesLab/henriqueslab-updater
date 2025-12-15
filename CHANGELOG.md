@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Cache Invalidation**: Fix stale update notifications after version upgrade
+  - Cache now invalidates when current version changes
+  - Prevents showing "update available" notifications after already upgrading
+  - Adds current_version validation in `get_cached_update_info()`
+
 ## [1.1.2] - 2025-12-15
 
 ### Changed
