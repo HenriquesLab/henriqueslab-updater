@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [1.1.1] - 2025-12-15
+
+### Added
+- **Upgrade Executor**: New `execute_upgrade()` function for safely executing upgrade commands
+  - Automatic handling of compound commands with `&&` (e.g., `brew update && brew upgrade pkg`)
+  - Proper command parsing using `shlex.split()` to prevent shell injection
+  - Configurable output display and timeout settings
+  - Returns (success, error_message) tuple for easy error handling
+- **UpgradeError**: New exception class for upgrade failures with command details
+- **execute_upgrade_raise()**: Convenience wrapper that raises exceptions instead of returning tuples
+
+### Changed
+- Exported upgrade utilities from main package: `execute_upgrade`, `execute_upgrade_raise`, `UpgradeError`
+
+## [1.1.0] - 2025-12-15
+
+### Added
+- **Changelog Parser**: New `changelog_parser.py` utility module for parsing CHANGELOG.md files
+  - Fetch and format changelogs from GitHub repositories
+  - Highlight breaking changes and version-specific updates
+  - Support for filtering by version range
+- **CLAUDE.md**: Development guidance for Claude Code integration
+
 ## [1.0.0] - 2024-12-14
 
 ### Added

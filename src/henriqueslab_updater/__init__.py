@@ -54,6 +54,9 @@ except ImportError:
 from .sources.pypi import PyPISource
 from .sources.homebrew import HomebrewSource
 
+# Upgrade utilities
+from .utils import execute_upgrade, execute_upgrade_raise, UpgradeError
+
 __all__ = [
     # Version
     "__version__",
@@ -72,4 +75,8 @@ __all__ = [
     # Sources
     "PyPISource",
     "HomebrewSource",
+    # Upgrade utilities
+    "execute_upgrade",
+    "execute_upgrade_raise",
+    "UpgradeError",
 ]
