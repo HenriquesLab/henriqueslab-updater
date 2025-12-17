@@ -189,9 +189,12 @@ class TestRichNotifier:
         assert "v1.0.0 → v1.1.0" in message
         assert "pip" in message
 
-    @patch("henriqueslab_updater.notifiers.rich.Panel")
+    @patch("rich.panel.Panel")
     def test_display_exception_fallback(self, mock_panel):
         """Test display falls back to print on exception."""
+        if not RICH_AVAILABLE:
+            pytest.skip("Rich not available")
+
         mock_panel.side_effect = Exception("Panel creation failed")
 
         notifier = RichNotifier()
