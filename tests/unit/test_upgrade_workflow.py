@@ -1,5 +1,6 @@
 """Unit tests for upgrade workflow."""
 
+from typing import Optional
 from unittest.mock import Mock, patch, MagicMock
 import pytest
 
@@ -41,7 +42,7 @@ class MockNotifier:
     def show_success(self, version: str):
         self.calls["show_success"].append((version,))
 
-    def show_error(self, error: str | None):
+    def show_error(self, error: Optional[str]):
         self.calls["show_error"].append((error,))
 
     def show_manual_instructions(self, install_method: str):
