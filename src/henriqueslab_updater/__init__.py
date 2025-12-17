@@ -57,6 +57,13 @@ from .sources.homebrew import HomebrewSource
 # Upgrade utilities
 from .utils import execute_upgrade, execute_upgrade_raise, UpgradeError
 
+# Upgrade workflow
+from .workflows.upgrade_workflow import (
+    handle_upgrade_workflow,
+    UpgradeNotifier,
+    SimpleUpgradeNotifier,
+)
+
 __all__ = [
     # Version
     "__version__",
@@ -79,4 +86,8 @@ __all__ = [
     "execute_upgrade",
     "execute_upgrade_raise",
     "UpgradeError",
+    # Upgrade workflow
+    "handle_upgrade_workflow",
+    "UpgradeNotifier",
+    "SimpleUpgradeNotifier",
 ]

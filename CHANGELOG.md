@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-12-17
+
+### Added
+- **Upgrade Workflow**: New centralized `handle_upgrade_workflow()` function for CLI applications
+  - Complete end-to-end upgrade workflow with update checking, user confirmation, and execution
+  - `UpgradeNotifier` Protocol for custom CLI output formatting
+  - `SimpleUpgradeNotifier` implementation with no external dependencies
+  - Supports check-only mode, skip confirmation, and custom GitHub release URLs
+  - Returns standardized (success, error) tuples for easy error handling
+  - Designed for reuse across all HenriquesLab CLI tools
+- **Workflows Package**: New `workflows/` module for common CLI task workflows
+  - Exported `handle_upgrade_workflow`, `UpgradeNotifier`, `SimpleUpgradeNotifier` from main package
+
 ## [1.1.3] - 2025-12-15
 
 ### Fixed
