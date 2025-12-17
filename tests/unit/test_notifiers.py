@@ -189,18 +189,19 @@ class TestRichNotifier:
         assert "v1.0.0 → v1.1.0" in message
         assert "pip" in message
 
-    @patch("rich.panel.Panel")
-    def test_display_exception_fallback(self, mock_panel):
+    def test_display_exception_fallback(self):
         """Test display falls back to print on exception."""
         if not RICH_AVAILABLE:
             pytest.skip("Rich not available")
 
-        mock_panel.side_effect = Exception("Panel creation failed")
+        # Import here to avoid import errors when rich is not available
+        from unittest.mock import patch
 
-        notifier = RichNotifier()
+        with patch("rich.panel.Panel", side_effect=Exception("Panel creation failed")):
+            notifier = RichNotifier()
 
-        with patch("builtins.print") as mock_print:
-            if notifier.console is not None:
-                notifier.display("Test message")
-                # Should fall back to print on exception
-                mock_print.assert_called_once()
+            with patch("builtins.print") as mock_print:
+                if notifier.console is not None:
+                    notifier.display("Test message")
+                    # Should fall back to print on exception
+                    mock_print.assert_called_once()
